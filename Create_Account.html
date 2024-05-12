@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Create Account</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="ECG.css">
+    </head>
+<body>
+    <div class="container">
+        <div>
+            <img src="ECG.jpeg" width="260" height="230">
+        </div>
+        <h2>Get Started</h2>
+        <form class="inline">
+            <div class="input-icons">
+                <i class="fa fa-user icon"></i>
+                <input class="input-field" type="text" id="Name" name="name" placeholder="Full Name">
+            </div>
+            <div class="input-icons">
+                <i class="fa fa-envelope icon"></i>
+                <input class="input-field" type="email" id="Email" name="email1" minlength="5" maxlength="150" placeholder="E.g., a@gmail.com" pattern="[a-zA-Z0-9_-]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,4}\.*[a-z-A-Z]">
+            </div>
+            <div class="input-icons">
+                <i class="fa fa-mobile icon"></i>
+                <input class="input-field" type="text" id="phone" name="Phone" placeholder="E.g.,05xxxxxxxx" pattern="[0-9]{9}" minlength="9" maxlength="9">
+            </div>
+            <div class="input-icons">
+                <i class="fa fa-lock icon"></i>
+                <input class="input-field" type="password" id="password" name="Password1" placeholder="Strong Password">
+            </div>
+            <button class="next" style="background-color: #1150a2;"><a href="scan.html" style="color: #fff;">Next</a></button>
+        </form>
+        <p>Already a member? <a href="index.html" style="color: #1150a2;">Log In</a></p>
+    </div>
+    <script>
+        document.querySelector(".form").addEventListener("next", function (event){
+            let Name = document.querySelector("#name").value;
+            let Email = document.querySelector("#email").value;
+            let Phone = document.querySelector("#phone").value;
+            let Password = document.querySelector("#password").value;
+
+            let errorMessage = document.querySelector("#errormessage");
+            errorMessage.textContent = ""; // Clear previous error messages
+
+            let nameError = validateName(Name);
+            let emailError = validateEmail(Email);
+            let phoneError = validatePhone(Phone);
+            let passwordError = validatePassword(Password);
+
+            if (nameError) {
+                errorMessage.textContent = nameError;
+                return;
+            }
+            if (emailError) {
+                errorMessage.textContent = emailError;
+                return;
+            }
+            if (phoneError) {
+                errorMessage.textContent = phoneError;
+                return;
+            }
+            if (passwordError) {
+                errorMessage.textContent = passwordError;
+                return;
+            }
+
+            function validateName(Name) {
+                if (!Name || Name.trim() === "") {
+                    return "Name is required.";
+                }
+                return "";
+            }
+            function validateEmail(Email) {
+                if (!Email || Email.trim() === "") {
+                    return "Email is required.";
+                }
+                return "";
+            }
+            function validatePhone(Phone) {
+                if (!Phone || Phone.trim() === "") {
+                    return "Phone number is required.";
+                }
+                return "";
+            }
+            function validatePassword(Password) {
+                if (!Password || Password.trim() === "") {
+                    return "Password is required.";
+                }
+                return "";
+            }
+            
+        });
+    </script>
+</body>
+</html>

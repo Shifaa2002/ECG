@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECG Scanner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+        }
+        #container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        #header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            background-color: #0056b3; /* Blue header color */
+            padding: 10px 20px; /* Add padding for better appearance */
+            border-radius: 5px; /* Add rounded corners */
+        }
+        #header button {
+            color: #fff; /* White text color for buttons */
+            border: none;
+            background: #0056b3;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #header button:hover {
+            background-color: #0056b3; /* Darker blue color on hover */
+        }
+        #image-preview {
+            max-width: 100%;
+            max-height: 400px;
+            margin-bottom: 20px;
+        }
+        #video-preview {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+            border: 1px solid #0056b3;
+            border-radius: 5px;
+        }
+        #scan-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #0056b3;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: none; /* Initially hidden */
+        }
+        #scan-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="header">
+            <button id="back-button">Back</button>
+            <button id="Exit-button">Exit</button>
+        </div>
+        <h1>ECG Scanner</h1>
+        <button id="scan-file-button">Upload ECG Image</button>
+        <button id="scan-camera-button">Scan ECG with Camera</button>
+        <hr>
+        <h2>Image Preview:</h2>
+        <input type="file" id="file-input" style="display: none;">
+        <video id="video-preview" style="display: none;" autoplay></video>
+        <img id="image-preview" style="display: none;">
+        <button id="scan-button" style="display: none;">Scan ECG</button>
+    </div>
+
+    <script>
+        document.getElementById('scan-file-button').addEventListener('click', function() {
+            document.getElementById('file-input').click();
+        });
+
+        document.getElementById('scan-camera-button').addEventListener('click', function() {
+            var video = document.getElementById('video-preview');
+            var scanButton = document.getElementById('scan-button');
+
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(function(stream) {
+                        video.srcObject = stream;
+                        video.style.display = 'block';
+                        scanButton.style.display = 'block'; // Display scan button
+                    })
+                    .catch(function(error) {
+                        console.error('Error accessing camera:', error);
+                        alert('Error accessing camera. Please check your device settings.');
+                    });
+            } else {
+                console.error('getUserMedia not supported');
+                alert('getUserMedia is not supported in your browser.');
+            }
+        });
+
+        document.getElementById('file-input').addEventListener('change', function(event) {
+            var file = event.target.files[0];
+            var image = document.getElementById('image-preview');
+            var scanButton = document.getElementById('scan-button');
+
+            if (file) {
+                if (file.size > 5000000) { // Check if file size is greater than 5MB
+                    alert('Image size exceeds the limit. Please upload a smaller image.');
+                    return;
+                }
+
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    image.src = e.target.result;
+                    image.style.display = 'block';
+                    scanButton.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        function redirectToNextPage() {
+            window.location.href = 'im.html'; 
+        }
+
+        document.getElementById('scan-button').addEventListener('click', function() {
+            var video = document.getElementById('video-preview');
+            var canvas = document.createElement('canvas');
+            var context = canvas.getContext('2d');
+
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            var snapshot = new Image();
+            snapshot.src = canvas.toDataURL('image/png');
+            
+            // Use 'snapshot' image for further processing or display
+
+            alert('Snapshot taken. Proceed with scanning the ECG.');
+            setTimeout(function() {
+                redirectToNextPage();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

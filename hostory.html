@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Gallery</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .navbar {
+            background-color: #0056b3;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding: 10px 20px; /* Add padding for better appearance */
+            border-radius: 5px; /* Add rounded corners */
+        }
+        
+        .navbar button {
+            background-color: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            padding: 10px;
+        }
+        
+        .card img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .card .date {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <button onclick="goBack()">Back</button>
+        <button onclick="exit()" style="margin-left: auto;">Exit</button>
+    </div>
+    
+    <div class="container">
+        <div class="card">
+            <img src="ecg.png" alt="Image 1">
+            <div class="date">Date: April 30, 2024</div>
+        </div>
+        
+        <div class="card">
+            <img src="ecg.png" alt="Image 2">
+            <div class="date">Date: April 29, 2024</div>
+        </div>
+    </div>
+    
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+        
+        function exit() {
+            window.close();
+        }
+    </script>
+</body>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ECG App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #0056b3;
+      padding: 20px;
+      text-align: center;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      padding: 10px 20px; /* Add padding for better appearance */
+      
+    }
+
+    .heart-icon {
+      width: 50px;
+      height: 50px;
+      margin: 0 auto;
+      margin-left: 10px;
+      margin-right: 5px;
+      display: block;
+      fill: #fff;
+    }
+
+    .ecg-app {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .ecg-reading {
+      width: 200px;
+      height: 200px;
+      margin: 10px;
+      border-radius: 5px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      background-color: #fff;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .ecg-reading:hover {
+      transform: scale(1.05);
+    }
+
+    .ecg-reading img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 9999;
+    }
+
+    .modal-content {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      width: 60%;
+      max-width: 800px;
+      margin: 100px auto;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .back-btn {
+      background-color: #0056b3;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-top: 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background-color: #0056b3;
+    }
+
+    .ecg-info {
+      font-size: 16px;
+      margin-top: 20px;
+      line-height: 1.4;
+    }
+    .navbar {
+       
+        color: white;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .navbar button {
+        background-color: transparent;
+        border: none;
+        color: white;
+        cursor: pointer;
+        font-size: 16px;
+        margin-right: 10px;
+    }
+
+
+
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="navbar">
+        <button class = "back">
+            <a href="scan.html" style="color: #fff;">Back</a></button>
+        <svg class="heart-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M12 4.196c-4.97-5.034-12-2.824-12 3.804 0 5.22 6.563 7.207 12 14.001 5.437-6.794 12-8.781 12-14.001 0-6.628-7.03-8.838-12-3.804z" />
+          </svg>
+        <button class = "next" >
+            <a href="hostory.html" style="color: #fff;">Next</a>
+        </button>
+        
+    </div>
+    
+  </header>
+  <main>
+    <section class="ecg-app">
+        <section class="ecg-app">
+            <div class="ecg-reading" data-ecg-info="ECG Reading 1">
+              <img src="a3.jpeg" alt="ECG Reading 1- 01/04/2024">
+            </div>
+            <div class="ecg-reading" data-ecg-info="ECG Reading 2">
+              <img src="a1.jpeg" alt="ECG Reading 2- 03/03/2024">
+            </div>
+            <div class="ecg-reading" data-ecg-info="ECG Reading 3">
+              <img src="a2.jpeg" alt="ECG Reading 3- 14/02/2024">
+            </div>
+            <div class="ecg-reading" data-ecg-info="ECG Reading 4">
+              <img src="a4.jpeg" alt="ECG Reading 4- 09/01/2024">
+            </div>
+            <div class="ecg-reading" data-ecg-info="ECG Reading 5">
+              <img src="a5.jpeg" alt="ECG Reading 5- 01/12/2023">
+            </div>
+            <div class="ecg-reading" data-ecg-info="ECG Reading 6">
+              <img src="a8.jpeg" alt="ECG Reading 6- 22/09/2023">
+            </div>
+            <div class="ecg-reading" data-ecg-info="ECG Reading 7">
+              <img src="a7.jpeg" alt="ECG Reading 7- 12/08/2023">
+            </div>
+            <div class="ecg-reading" data-ecg-info="ECG Reading 8">
+              <img src="a6.jpeg" alt="ECG Reading 8- 28/06/2023">
+            </div>
+            
+            <div class="ecg-reading" data-ecg-info="ECG Reading 9">
+              <img src="a3.jpeg" alt="ECG Reading 9- 01/01/2022">
+            </div>
+            
+          </section>
+    </section>
+  </main>
+  <div class="modal">
+    <div class="modal-content">
+      <button class="back-btn">Back</button>
+      <p class="ecg-info"></p>
+    </div>
+  </div>
+
+  <script>
+  const ecgReadings = document.querySelectorAll('.ecg-reading');
+  const modal = document.querySelector('.modal');
+  const backBtn = document.querySelector('.back-btn');
+  const ecgInfo = document.querySelector('.ecg-info');
+  const ecgData = {
+    'ECG Reading 1': {
+        date: '01/01/2024',
+        recommendedProcedures: '<br> ECG monitoring with defibrillator capacity<br>Alert Cath Lab & bypass Emergency Department',
+        otherDiagnoses: 'NORMAL',
+      },
+      'ECG Reading 2': {
+        date: '',
+        recommendedProcedures: '<br> ECG monitoring with defibrillator capacity<br>Alert Cath Lab & bypass Emergency Department',
+        otherDiagnoses: 'ABNORMAL',
+      },
+      'ECG Reading 3': {
+        date: '03/01/2024',
+        recommendedProcedures: '<br> ECG monitoring with defibrillator capacity<br>Alert Cath Lab & bypass Emergency Department',
+        otherDiagnoses: 'NORMAL',
+      },
+      'ECG Reading 4': {
+        date: '04/01/2024',
+        recommendedProcedures: '<br> ECG monitoring with defibrillator capacity<br>Alert Cath Lab & bypass Emergency Department',
+        otherDiagnoses: 'ABNORMAL',
+      },
+      'ECG Reading 5': {
+        date: '05/01/2024',
+        recommendedProcedures: '<br> ECG monitoring with defibrillator capacity<br>Alert Cath Lab & bypass Emergency Department',
+        otherDiagnoses: 'NORMAL',
+      },
+      'ECG Reading 6': {
+        date: '06/01/2024',
+        recommendedProcedures: '<br> ECG monitoring with defibrillator capacity<br>Alert Cath Lab & bypass Emergency Department',
+        otherDiagnoses: 'NORMAL',
+      },
+      'ECG Reading 7': {
+        date: '07/01/2024',
+        recommendedProcedures: '<br> ECG monitoring with defibrillator capacity<br>Alert Cath Lab & bypass Emergency Department',
+        otherDiagnoses: 'NORMAL',
+      },
+      'ECG Reading 8': {
+        date: '08/01/2024',
+        recommendedProcedures: '<br> ECG monitoring with defibrillator capacity<br>Alert Cath Lab & bypass Emergency Department',
+        otherDiagnoses: 'ABNORMAL',
+      },
+      'ECG Reading 9': {
+        date: '09/01/2024',
+        recommendedProcedures: '<br> ECG monitoring with defibrillator capacity<br>Alert Cath Lab & bypass Emergency Department',
+        otherDiagnoses: 'NORMAL',
+      },
+      
+    };
+    
+    ecgReadings.forEach((reading) => {
+        reading.addEventListener('click', () => {
+            modal.style.display = 'block';
+
+    // Extracting name and date from the clicked image
+    const image = reading.querySelector('img');
+    const imageAlt = image.getAttribute('alt');
+    const [imageName, imageDate] = imageAlt.split('-');
+
+    // Retrieve the ECG reading information from the object
+    const readingInfo = ecgData[reading.getAttribute('data-ecg-info')];
+
+    // Populating modal with information
+    ecgInfo.innerHTML = `
+      
+      <strong>Date:</strong> ${imageDate}<br>
+      <strong>Recommended procedures:</strong> ${readingInfo.recommendedProcedures}<br>
+      <strong>Other diagnoses:</strong> ${readingInfo.otherDiagnoses}<br>
+    `;
+  });
+});
+backBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
+    ecgInfo.textContent = '';
+});
+
+</script>
+</body>
+
+</html> 
